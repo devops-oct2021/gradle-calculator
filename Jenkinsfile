@@ -3,20 +3,18 @@ pipeline
 agent any
 stages
 {
- stage ('code scm checkout')
- { steps {  git branch: 'master', url: 'https://github.com/prakashk0301/gradle-calculator'   } }
+ stage ('scm checkout')
+ {
+ steps { git branch: 'master', url: 'https://github.com/devops-oct2021/gradle-calculator.git' }
+ }
 
- stage ('code build')
-
- {   steps {  sh './gradlew clean build'
-              sh './gradlew jar'
-                }}
-
- 
- stage ('code test')
-
- {   steps { sh './gradlew test'  }}
- 
+ stage ('run-gradle-command-to-build-and-geneate-artifacts')
+ { 
+ steps { sh './gradlew clean'
+ sh './gradlew assemble'
+ sh './gradlew build'
+ sh './gradlew jar'
+ }
+ }
 }
-
 }
